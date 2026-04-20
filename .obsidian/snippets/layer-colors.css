@@ -1,0 +1,160 @@
+/*
+ * layer-colors.css
+ * my-skill-graph vault の9層 + 特殊フォルダを色分け
+ *
+ * 有効化: Obsidian 設定 → 外観 → CSS snippets → layer-colors をON
+ *
+ * 仕様:
+ *   - ファイルエクスプローラー: フォルダ名色とアイコンバーで層を識別
+ *   - リーディングビュー: ノート冒頭のタイトル左にカラーアクセント
+ *   - タグピル: frontmatter tags[0] で層色を反映
+ *   - グラフビュー: graph.json の colorGroups と併用
+ *
+ * 配色ルール:
+ *   知識層(60-67) = 彩度中〜高 / 実運用層(10-50) = 彩度低め / MOC = ゴールド
+ */
+
+/* ===== 色定義（CSS カスタムプロパティ） ===== */
+:root {
+  /* 知識層 */
+  --color-laws:       #C62828;   /* 🟥 法令 - Red */
+  --color-guidelines: #EF6C00;   /* 🟧 ガイドライン - Orange */
+  --color-frameworks: #6A1B9A;   /* 🟪 理論 - Purple */
+  --color-disorders:  #F9A825;   /* 🟨 障害特性 - Amber */
+  --color-methods:    #2E7D32;   /* 🟩 技法 - Green */
+  --color-assess:     #5D4037;   /* 🟫 アセスメント - Brown */
+  --color-services:   #1565C0;   /* 🟦 サービス - Blue */
+  --color-orgs:       #00838F;   /* 🟦 機関 - Teal */
+
+  /* 実運用層 */
+  --color-people:     #455A64;   /* ⚫ 利用者 - Blue-Gray */
+  --color-episodes:   #616161;   /* ⚫ エピソード - Gray */
+  --color-insights:   #827717;   /* 🟢 知見 - Olive */
+  --color-stake:      #006064;   /* 🔵 具体関係者 - Dark Cyan */
+  --color-resil:      #AD1457;   /* 🟣 親亡き後 - Pink */
+
+  /* メタ */
+  --color-moc:        #FFA000;   /* ⭐ MOC - Gold */
+  --color-meta:       #757575;   /* ⚙ Meta - Gray */
+}
+
+/* ===== ファイルエクスプローラーのフォルダ色 ===== */
+
+/* 層ごとに data-path セレクタ（フォルダ名一致）で色付け */
+.nav-folder-title[data-path^="00_MOC"]         { color: var(--color-moc); font-weight: 700; }
+.nav-folder-title[data-path^="10_People"]      { color: var(--color-people); font-weight: 600; }
+.nav-folder-title[data-path^="20_Episodes"]    { color: var(--color-episodes); font-weight: 600; }
+.nav-folder-title[data-path^="30_Insights"]    { color: var(--color-insights); font-weight: 600; }
+.nav-folder-title[data-path^="40_Stakeholders"] { color: var(--color-stake); font-weight: 600; }
+.nav-folder-title[data-path^="50_Resilience"]  { color: var(--color-resil); font-weight: 600; }
+
+.nav-folder-title[data-path^="60_Laws"]        { color: var(--color-laws); font-weight: 600; }
+.nav-folder-title[data-path^="61_Guidelines"]  { color: var(--color-guidelines); font-weight: 600; }
+.nav-folder-title[data-path^="62_Frameworks"]  { color: var(--color-frameworks); font-weight: 600; }
+.nav-folder-title[data-path^="63_Disorders"]   { color: var(--color-disorders); font-weight: 600; }
+.nav-folder-title[data-path^="64_Methods"]     { color: var(--color-methods); font-weight: 600; }
+.nav-folder-title[data-path^="65_Assessments"] { color: var(--color-assess); font-weight: 600; }
+.nav-folder-title[data-path^="66_Services"]    { color: var(--color-services); font-weight: 600; }
+.nav-folder-title[data-path^="67_Orgs"]        { color: var(--color-orgs); font-weight: 600; }
+
+.nav-folder-title[data-path^="90_Meta"]        { color: var(--color-meta); }
+
+/* ===== ファイル（.md）の色：親フォルダから継承 ===== */
+.nav-file-title[data-path^="00_MOC/"]         { border-left: 3px solid var(--color-moc); padding-left: 8px; }
+.nav-file-title[data-path^="10_People/"]      { border-left: 3px solid var(--color-people); padding-left: 8px; }
+.nav-file-title[data-path^="20_Episodes/"]    { border-left: 3px solid var(--color-episodes); padding-left: 8px; }
+.nav-file-title[data-path^="30_Insights/"]    { border-left: 3px solid var(--color-insights); padding-left: 8px; }
+.nav-file-title[data-path^="40_Stakeholders/"] { border-left: 3px solid var(--color-stake); padding-left: 8px; }
+.nav-file-title[data-path^="50_Resilience/"]  { border-left: 3px solid var(--color-resil); padding-left: 8px; }
+
+.nav-file-title[data-path^="60_Laws/"]        { border-left: 3px solid var(--color-laws); padding-left: 8px; }
+.nav-file-title[data-path^="61_Guidelines/"]  { border-left: 3px solid var(--color-guidelines); padding-left: 8px; }
+.nav-file-title[data-path^="62_Frameworks/"]  { border-left: 3px solid var(--color-frameworks); padding-left: 8px; }
+.nav-file-title[data-path^="63_Disorders/"]   { border-left: 3px solid var(--color-disorders); padding-left: 8px; }
+.nav-file-title[data-path^="64_Methods/"]     { border-left: 3px solid var(--color-methods); padding-left: 8px; }
+.nav-file-title[data-path^="65_Assessments/"] { border-left: 3px solid var(--color-assess); padding-left: 8px; }
+.nav-file-title[data-path^="66_Services/"]    { border-left: 3px solid var(--color-services); padding-left: 8px; }
+.nav-file-title[data-path^="67_Orgs/"]        { border-left: 3px solid var(--color-orgs); padding-left: 8px; }
+
+/* ===== タグピル（frontmatter tags）の色 ===== */
+
+/* 各層の代表タグを色分け（複数タグが付いていても先頭タグの色でサマリ表示） */
+.tag[href="#law"]          { background-color: var(--color-laws); color: white; }
+.tag[href="#guideline"]    { background-color: var(--color-guidelines); color: white; }
+.tag[href="#framework"]    { background-color: var(--color-frameworks); color: white; }
+.tag[href="#disorder"]     { background-color: var(--color-disorders); color: black; }
+.tag[href="#method"]       { background-color: var(--color-methods); color: white; }
+.tag[href="#assessment"]   { background-color: var(--color-assess); color: white; }
+.tag[href="#service"]      { background-color: var(--color-services); color: white; }
+.tag[href="#org"]          { background-color: var(--color-orgs); color: white; }
+.tag[href="#person"]       { background-color: var(--color-people); color: white; }
+.tag[href="#episode"]      { background-color: var(--color-episodes); color: white; }
+.tag[href="#insight"]      { background-color: var(--color-insights); color: white; }
+.tag[href="#moc"]          { background-color: var(--color-moc); color: black; }
+
+/* ===== リーディングビュー: cssclasses による層別アクセント ===== */
+
+/* cssclasses: [layer-law] をfrontmatterに持つノートで発動 */
+.markdown-preview-view.layer-law .inline-title,
+.markdown-source-view.layer-law .inline-title {
+  border-left: 5px solid var(--color-laws);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-guideline .inline-title,
+.markdown-source-view.layer-guideline .inline-title {
+  border-left: 5px solid var(--color-guidelines);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-framework .inline-title,
+.markdown-source-view.layer-framework .inline-title {
+  border-left: 5px solid var(--color-frameworks);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-disorder .inline-title,
+.markdown-source-view.layer-disorder .inline-title {
+  border-left: 5px solid var(--color-disorders);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-method .inline-title,
+.markdown-source-view.layer-method .inline-title {
+  border-left: 5px solid var(--color-methods);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-assessment .inline-title,
+.markdown-source-view.layer-assessment .inline-title {
+  border-left: 5px solid var(--color-assess);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-service .inline-title,
+.markdown-source-view.layer-service .inline-title {
+  border-left: 5px solid var(--color-services);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-org .inline-title,
+.markdown-source-view.layer-org .inline-title {
+  border-left: 5px solid var(--color-orgs);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-person .inline-title,
+.markdown-source-view.layer-person .inline-title {
+  border-left: 5px solid var(--color-people);
+  padding-left: 12px;
+}
+.markdown-preview-view.layer-moc .inline-title,
+.markdown-source-view.layer-moc .inline-title {
+  border-left: 5px solid var(--color-moc);
+  padding-left: 12px;
+  background: linear-gradient(90deg, rgba(255,160,0,0.08) 0%, transparent 30%);
+}
+
+/* ===== wikilink 表示の軽微な差別化（オプション） ===== */
+
+/* 内部リンクにホバー時のアクセント（層判定はCSS単体では困難。
+   Obsidian の Internal Link Suggester + カスタムルールで拡張可能） */
+
+/* ===== タイトルバーの行間調整（増えたページで疲れないよう） ===== */
+.nav-file-title,
+.nav-folder-title {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

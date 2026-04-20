@@ -1,0 +1,121 @@
+{
+  "collapse-filter": true,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:00_MOC/",
+      "color": {
+        "a": 1,
+        "rgb": 16752640
+      }
+    },
+    {
+      "query": "path:10_People/",
+      "color": {
+        "a": 1,
+        "rgb": 4545124
+      }
+    },
+    {
+      "query": "path:20_Episodes/",
+      "color": {
+        "a": 1,
+        "rgb": 6381921
+      }
+    },
+    {
+      "query": "path:30_Insights/",
+      "color": {
+        "a": 1,
+        "rgb": 8550167
+      }
+    },
+    {
+      "query": "path:40_Stakeholders/",
+      "color": {
+        "a": 1,
+        "rgb": 24676
+      }
+    },
+    {
+      "query": "path:50_Resilience/",
+      "color": {
+        "a": 1,
+        "rgb": 11342935
+      }
+    },
+    {
+      "query": "path:60_Laws/",
+      "color": {
+        "a": 1,
+        "rgb": 12986408
+      }
+    },
+    {
+      "query": "path:61_Guidelines/",
+      "color": {
+        "a": 1,
+        "rgb": 15690752
+      }
+    },
+    {
+      "query": "path:62_Frameworks/",
+      "color": {
+        "a": 1,
+        "rgb": 6953882
+      }
+    },
+    {
+      "query": "path:63_Disorders/",
+      "color": {
+        "a": 1,
+        "rgb": 16361509
+      }
+    },
+    {
+      "query": "path:64_Methods/",
+      "color": {
+        "a": 1,
+        "rgb": 3046706
+      }
+    },
+    {
+      "query": "path:65_Assessments/",
+      "color": {
+        "a": 1,
+        "rgb": 6111287
+      }
+    },
+    {
+      "query": "path:66_Services/",
+      "color": {
+        "a": 1,
+        "rgb": 1402304
+      }
+    },
+    {
+      "query": "path:67_Orgs/",
+      "color": {
+        "a": 1,
+        "rgb": 33679
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1.2,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": true,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 0.5233730313478961,
+  "close": true
+}

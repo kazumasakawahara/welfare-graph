@@ -1,0 +1,39 @@
+MIT License
+
+Copyright (c) 2026 welfare-graph contributors
+
+本ライセンスは、本プロジェクト内の **ソフトウェア部分**（スクリプト・設定ファイル・
+スキル定義）に適用されます。**ドキュメント部分**（知識ノート・ガイド・MOC 等の
+Markdown 文書）は `LICENSE-DOCS` に記載の Creative Commons Attribution-ShareAlike
+4.0 International License が適用されます。
+
+---
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## 対象ファイル（MITライセンス適用範囲）
+
+- `.claude/skills/**/*.md` — Claude Code スキル定義
+- `.obsidian/snippets/*.css` — Obsidian CSS スニペット
+- `.obsidian/*.json` — Obsidian 設定テンプレート
+- `90_Meta/scripts/*.py` — Python スクリプト
+- `90_Meta/templates/*.md` — ノートテンプレート
+- `.env.example` / `.gitignore` — 設定ファイル
