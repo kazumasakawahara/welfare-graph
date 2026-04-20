@@ -1,0 +1,72 @@
+name: monthly-health-check
+
+# 毎月 1 日 00:00 UTC（日本時間 9:00）に実行
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install python-frontmatter
+
+      - name: Run vault health check
+        run: python 90_Meta/scripts/vault_health_check.py
+
+      - name: Run amendment check
+        run: python 90_Meta/scripts/amendment_check.py
+
+      - name: Set date
+        id: date
+        run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+
+      - name: Commit reports
+        run: |
+          git config user.name "amendment-bot"
+          git config user.email "amendment-bot@users.noreply.github.com"
+          git add 90_Meta/health-reports/ 90_Meta/amendment-reports/ || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(meta): monthly health & amendment reports ${{ steps.date.outputs.DATE }}"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Check for CRITICAL items
+        id: check_critical
+        run: |
+          REPORT="90_Meta/health-reports/${{ steps.date.outputs.DATE }}.md"
+          AMEND_REPORT="90_Meta/amendment-reports/${{ steps.date.outputs.DATE }}.md"
+          CRITICAL_COUNT=0
+          if [ -f "$REPORT" ]; then
+            COUNT=$(grep -oP 'CRITICAL \| \K\d+' "$REPORT" | head -1 || echo 0)
+            CRITICAL_COUNT=$((CRITICAL_COUNT + COUNT))
+          fi
+          if [ -f "$AMEND_REPORT" ]; then
+            COUNT=$(grep -oP 'CRITICAL \(\K\d+' "$AMEND_REPORT" | head -1 || echo 0)
+            CRITICAL_COUNT=$((CRITICAL_COUNT + COUNT))
+          fi
+          echo "critical_count=$CRITICAL_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Create Issue if CRITICAL items exist
+        if: steps.check_critical.outputs.critical_count != '0'
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "[CRITICAL] 月次健全性チェック ${{ steps.date.outputs.DATE }}"
+          content-filepath: 90_Meta/health-reports/${{ steps.date.outputs.DATE }}.md
+          labels: |
+            critical
+            amendment
+            needs-triage

@@ -99,13 +99,17 @@ REL_TYPE_MAP = {
     "complements": "COMPLEMENTS",
     "contradicts": "CONTRADICTS",
     "supersedes": "SUPERSEDES",
+    "superseded-by": "SUPERSEDED_BY",
+    "amendment-of": "AMENDMENT_OF",
+    "pending-amendment": "PENDING_AMENDMENT",
     "derived-from": "DERIVED_FROM",
     "supersedes-at": "SUPERSEDES_AT",
     "delivers": "DELIVERS",
     "informs": "INFORMS",
     "instance-of": "INSTANCE_OF",
-    "escalate-to": "ESCALATE_TO",
     "explains": "EXPLAINS",
+    "supports": "SUPPORTS",
+    "referred-by": "REFERRED_BY",
 }
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+?)(?:\|[^\]]+)?\]\]")
@@ -197,9 +201,27 @@ def create_or_update_node(tx, md: Path, meta: dict):
     if "id" in props:
         props["alias_id"] = props.pop("id")
 
-    # 固定 nid（パスベース）と path を最後に設定（上書き防止）
+    # 固定 nid（パスベース）と layer を最後に設定（上書き防止）
     props["nid"] = node_id
     props["path"] = str(md.relative_to(VAULT))
+
+    # layer = 第一階層（クエリ容易化のため）
+    rel_path = md.relative_to(VAULT)
+    parts = rel_path.parts
+    if len(parts) >= 2 and parts[1] == "archived":
+        # 60_Laws/archived/foo.md → layer = 60_Laws, archived = True
+        props["layer"] = parts[0]
+        props["archived"] = True
+    else:
+        props["layer"] = parts[0]
+        props["archived"] = False
+
+    # status デフォルト
+    if "status" not in props:
+        if props.get("archived"):
+            props["status"] = "archived"
+        else:
+            props["status"] = "active"
 
     tx.run(
         f"MERGE (n {{nid: $nid}}) "
@@ -287,11 +309,14 @@ def sync():
         print("[3/4] 関係作成中...")
         rels_created = 0
         rels_broken = 0
+        amendment_rels = 0
         for md in mds:
             try:
                 post = load_frontmatter_safely(md)
             except Exception:
                 continue
+
+            # 通常の relations
             relations = post.metadata.get("relations", []) or []
             for rel in relations:
                 if not isinstance(rel, dict):
@@ -306,7 +331,25 @@ def sync():
                 except Exception as e:
                     print(f"  関係作成失敗: {md.relative_to(VAULT)}: {e}")
 
-        print(f"  関係作成: {rels_created} / 未解決: {rels_broken}")
+            # 改正追随: superseded_by / supersedes フィールドから自動関係生成
+            for fm_key, rel_type in [("superseded_by", "superseded-by"), ("supersedes", "supersedes")]:
+                fm_val = post.metadata.get(fm_key)
+                if not fm_val:
+                    continue
+                synthetic_rel = {
+                    "to": fm_val if isinstance(fm_val, str) else str(fm_val),
+                    "type": rel_type,
+                    "weight": 1.0,
+                    "evidence": f"frontmatter.{fm_key}",
+                }
+                try:
+                    ok = session.execute_write(create_relationship, md, synthetic_rel, all_ids)
+                    if ok:
+                        amendment_rels += 1
+                except Exception as e:
+                    print(f"  改正追随関係失敗: {md.relative_to(VAULT)}: {e}")
+
+        print(f"  関係作成: {rels_created} / 改正追随: {amendment_rels} / 未解決: {rels_broken}")
 
         # 4. サマリ
         print("\n[4/4] サマリ取得...")

@@ -24,8 +24,8 @@ VAULT = Path(__file__).resolve().parents[2]
 REPORT_DIR = VAULT / "90_Meta" / "health-reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-EXCLUDE_DIRS = {".obsidian", ".claude", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/scripts"}
-EXCLUDE_FILES = {"90_Meta/alias_map.md"}
+EXCLUDE_DIRS = {".obsidian", ".claude", ".github", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/amendment-reports", "90_Meta/scripts", "docs"}
+EXCLUDE_FILES = {"90_Meta/alias_map.md", "CONTRIBUTING.md", "README.md"}
 
 # 層別必須フィールド
 REQUIRED_FIELDS = {
@@ -79,9 +79,9 @@ def iter_vault_mds():
             continue
         if str(rel) in EXCLUDE_FILES:
             continue
-        if parts[0] in {".obsidian", ".claude"}:
+        if parts[0] in {".obsidian", ".claude", ".github", "docs"}:
             continue
-        if "raw" in parts or "templates" in parts or "health-reports" in parts:
+        if "raw" in parts or "templates" in parts or "health-reports" in parts or "amendment-reports" in parts:
             continue
         yield md
 
@@ -151,12 +151,17 @@ def check_vault():
         info["total_with_fm"] += 1
         meta = post.metadata
         node_type = meta.get("type", "")
+        node_status = meta.get("status", "active")
+        is_archived = node_status == "archived" or "archived" in Path(rel_path).parts
         info["type_counts"][node_type] += 1
 
-        # 必須フィールドチェック
+        # 必須フィールドチェック（archived ノードは review_due 等を除外）
         if node_type in REQUIRED_FIELDS:
             missing = []
             for f in REQUIRED_FIELDS[node_type]:
+                # archived ノードは review_due / monitoring_url 系を要求しない
+                if is_archived and f in ("review_due", "monitoring_url"):
+                    continue
                 v = meta.get(f, None)
                 if v is None or v == "" or v == []:
                     missing.append(f)
@@ -244,7 +249,7 @@ def check_vault():
                     referenced.add(candidates[0])
 
     # 孤児ノート判定
-    # 除外: README.md, MOC, meta, layer-readme 類
+    # 除外: README.md, MOC, meta, layer-readme, archived/ 類
     for md in mds:
         rel_path = str(md.relative_to(VAULT))
         if md.stem == "README":
@@ -253,6 +258,9 @@ def check_vault():
             continue
         if "MOC" in rel_path or "Knowledge.md" in rel_path or "Sexuality.md" in rel_path:
             continue
+        # archived/ 配下は意図的に現行ノートから直接リンクされない場合がある
+        if "archived" in Path(rel_path).parts:
+            continue
 
         post, _, err = load_fm_safely(md)
         if err or not post or not post.metadata:
@@ -260,6 +268,10 @@ def check_vault():
 
         node_type = post.metadata.get("type", "")
         if node_type in {"moc", "layer-readme", "meta"}:
+            continue
+
+        # status: archived も除外
+        if post.metadata.get("status") == "archived":
             continue
 
         nid = md_to_id(md)

@@ -265,6 +265,92 @@ relations:
 
 ---
 
-## 7. 変更履歴
+## 7. 改正追随（Amendment Tracking）
+
+法令・ガイドライン・サービス報酬は改正されるため、本 vault は **版管理型の進化する知識グラフ** として扱う。
+
+### 7.1 追加 frontmatter フィールド（law / guideline / service 対象）
+
+| フィールド | 型 | 必須 | 説明 |
+|---|---|---|---|
+| `version` | string | ✅ | 版名（例：「令和6年改正」）。改正ごとに更新 |
+| `version_hash` | string | 推奨 | 原文の SHA256 先頭8桁。改正検知の指紋 |
+| `effective_date` | date | ✅ | 施行日 |
+| `review_due` | date | ✅ | 次回見直し期限。改正予告を受けて前倒し可 |
+| `last_verified` | date | 推奨 | 最後に一次ソースと突合した日 |
+| `source_url` | string | ✅ | e-Gov・厚労省・内閣府等の公式 URL |
+| `monitoring_url` | string | 推奨 | RSS / 改正告知ページ URL（自動監視対象） |
+| `amendment_history` | array | 推奨 | 版の履歴（後述） |
+| `supersedes` | wikilink | 条件付 | 旧版ノートを指す（新版に記載） |
+| `superseded_by` | wikilink | 条件付 | 新版ノートを指す（旧版に記載） |
+| `status` | string | 推奨 | `active` / `archived` / `pending-amendment` / `under-review` |
+
+### 7.2 amendment_history スキーマ
+
+```yaml
+amendment_history:
+  - version: "平成24年改正"
+    effective_date: 2013-04-01
+    summary: "障害者自立支援法から総合支援法へ改称、難病追加"
+    archived_as: "[[archived/障害者総合支援法_H24.md]]"
+  - version: "令和6年改正"
+    effective_date: 2024-04-01
+    summary: "就労選択支援新設、意思決定支援の強化"
+    archived_as: "[[archived/障害者総合支援法_R6.md]]"
+    diff_source: "[[raw/laws/障害者総合支援法_令和6年改正.pdf]]"
+```
+
+### 7.3 archived/ の使い方
+
+改正時は **旧版をアーカイブして参照可能に保つ**:
+
+```
+60_Laws/
+├── 障害者総合支援法.md           ← 現行版（status: active）
+└── archived/
+    ├── 障害者総合支援法_H24.md   ← 旧版（status: archived、superseded_by 付与）
+    └── 障害者総合支援法_R6.md    ← 旧版
+```
+
+旧版ノートには以下が必須:
+```yaml
+status: archived
+superseded_by: "[[60_Laws/障害者総合支援法]]"
+effective_date_end: 2027-03-31   # 失効日
+```
+
+### 7.4 改正追随 relations type
+
+| type | 方向 | 意味 |
+|---|---|---|
+| `supersedes` | 新→旧 | 新版が旧版を置き換える |
+| `superseded-by` | 旧→新 | 旧版が新版に置き換えられた |
+| `amendment-of` | 派生→元 | 改正法が元法を修正する |
+| `pending-amendment` | 対象→告知 | 改正予告あり（要見直し） |
+
+### 7.5 status ライフサイクル
+
+```
+active ─(改正告知)→ pending-amendment ─(差分取込)→ under-review ─(承認)→ active
+                                                                    │
+                                                              (旧版)→ archived
+```
+
+### 7.6 波及検知
+
+Neo4j で「この法令改正で影響を受けるノート一覧」を取得:
+
+```cypher
+MATCH (law:Node {nid: '60_Laws/障害者総合支援法'})<-[r]-(affected)
+WHERE r.type IN ['applies-to', 'mandated-by', 'compliance-required', 'law_basis']
+RETURN affected.nid, r.type
+```
+
+詳細な運用手順は [[90_Meta/amendment-tracking]] を参照。
+
+---
+
+## 8. 変更履歴
 
 - 2026-04-20: 初版（F1骨組み）
+- 2026-04-20: §7 改正追随機構を追加（version_history, archived/, supersedes）
