@@ -32,3 +32,15 @@ venv/
 raw/**/*.pdf
 raw/**/*.PDF
 !raw/**/README.md
+
+# --- amendment-reports は各自の運用で生成 ---
+90_Meta/amendment-reports/*.md
+!90_Meta/amendment-reports/.gitkeep
+
+# --- MCP サーバー: ビルド成果物・venv ---
+mcp_server/.venv/
+mcp_server/dist/
+mcp_server/build/
+mcp_server/*.egg-info/
+mcp_server/src/*.egg-info/
+mcp_server/uv.lock

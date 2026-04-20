@@ -24,7 +24,7 @@ VAULT = Path(__file__).resolve().parents[2]
 REPORT_DIR = VAULT / "90_Meta" / "health-reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-EXCLUDE_DIRS = {".obsidian", ".claude", ".github", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/amendment-reports", "90_Meta/scripts", "docs"}
+EXCLUDE_DIRS = {".obsidian", ".claude", ".github", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/amendment-reports", "90_Meta/scripts", "docs", "mcp_server"}
 EXCLUDE_FILES = {"90_Meta/alias_map.md", "CONTRIBUTING.md", "README.md"}
 
 # 層別必須フィールド
@@ -79,7 +79,7 @@ def iter_vault_mds():
             continue
         if str(rel) in EXCLUDE_FILES:
             continue
-        if parts[0] in {".obsidian", ".claude", ".github", "docs"}:
+        if parts[0] in {".obsidian", ".claude", ".github", "docs", "mcp_server"}:
             continue
         if "raw" in parts or "templates" in parts or "health-reports" in parts or "amendment-reports" in parts:
             continue
