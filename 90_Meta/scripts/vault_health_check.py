@@ -25,7 +25,7 @@ REPORT_DIR = VAULT / "90_Meta" / "health-reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 EXCLUDE_DIRS = {".obsidian", ".claude", ".github", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/amendment-reports", "90_Meta/scripts", "docs", "mcp_server"}
-EXCLUDE_FILES = {"90_Meta/alias_map.md", "CONTRIBUTING.md", "README.md"}
+EXCLUDE_FILES = {"90_Meta/alias_map.md", "CONTRIBUTING.md", "README.md", "CLAUDE.md", "log.md", "overview.md"}
 
 # 層別必須フィールド
 REQUIRED_FIELDS = {

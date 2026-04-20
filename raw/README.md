@@ -16,6 +16,7 @@
 | `raw/services/` | `66_Services/` | 報酬告示・サービス通知 |
 | `raw/insights/` | `30_Insights/` | 判例・事例・ナラティブ・Wikipedia 記事 |
 | `raw/reports/` | `30_Insights/` または `90_Meta/` | 学会発表・調査報告書 |
+| `raw/notes/` | 後続 ingest 先任意 | Claude との会話保存（[[../CLAUDE#§9 会話保存モード（save）]]） |
 
 その他の取り込み先層（`62_Frameworks/`・`63_Disorders/`・`64_Methods/`・
 `65_Assessments/`・`67_Orgs/`）は、内容に応じて `raw/insights/` や

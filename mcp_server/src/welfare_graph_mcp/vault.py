@@ -40,6 +40,9 @@ PRIVATE_FILES = {
     "90_Meta/alias_map.md",
     "README.md",
     "CONTRIBUTING.md",
+    "CLAUDE.md",
+    "log.md",
+    "overview.md",
     "LICENSE",
     "LICENSE-DOCS",
 }

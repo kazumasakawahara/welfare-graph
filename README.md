@@ -16,6 +16,13 @@
 - ❓ **[よくある質問（FAQ）](docs/FAQ.md)** — 困ったときの辞書
 - 🤖 **[MCP セットアップ](docs/MCP_SETUP.md)** — Claude Desktop / Code から障害福祉相談に活用したい方向け
 
+### Claude Code / Desktop で開発者・運用者として使う方へ
+
+- 📘 **[CLAUDE.md](CLAUDE.md)** — vault 運用マニュアル（Karpathy「LLM Wiki」パターン準拠、5 + 2 モード契約）
+- 📊 **[overview.md](overview.md)** — 俯瞰ダッシュボード（自動生成）
+- 📝 **[log.md](log.md)** — 操作ログ（append-only）
+- 🏷️ **[90_Meta/taxonomy.md](90_Meta/taxonomy.md)** — ドメインタグ標準辞書
+
 ## 📐 特徴
 
 - **9層アーキテクチャ**: 法令/ガイドライン/理論/障害特性/技法/アセスメント/サービス/機関/利用者
