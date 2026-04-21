@@ -17,9 +17,9 @@ cssclasses: [layer-meta]
 
 ## 📊 全体サマリ
 
-- **総ノート数**: 121
-- **総 relations**: 355
-- **平均 relations/ノート**: 2.9
+- **総ノート数**: 123
+- **総 relations**: 363
+- **平均 relations/ノート**: 3.0
 
 ## 🗂 層別ページ数
 
@@ -27,7 +27,7 @@ cssclasses: [layer-meta]
 |---|---|
 | 00_MOC | 7 |
 | 10_People | 3 |
-| 30_Insights | 6 |
+| 30_Insights | 8 |
 | 50_Resilience | 2 |
 | 60_Laws | 11 |
 | 61_Guidelines | 11 |
@@ -49,11 +49,11 @@ cssclasses: [layer-meta]
 | disorder | 11 |
 | guideline | 10 |
 | law | 10 |
+| insight | 8 |
 | layer-readme | 8 |
 | moc | 7 |
 | assessment | 7 |
 | meta | 6 |
-| insight | 6 |
 | framework | 6 |
 | person | 3 |
 | care_role | 1 |
@@ -63,7 +63,7 @@ cssclasses: [layer-meta]
 
 | status | 件数 |
 |---|---|
-| active | 119 |
+| active | 121 |
 | archived | 1 |
 | 検討中 | 1 |
 
@@ -83,20 +83,21 @@ cssclasses: [layer-meta]
 | 4 | [[63_Disorders/強度行動障害]] | 13 |
 | 5 | [[60_Laws/障害者虐待防止法]] | 12 |
 | 6 | [[61_Guidelines/意思決定支援ガイドライン]] | 11 |
-| 7 | [[60_Laws/発達障害者支援法]] | 8 |
-| 8 | [[60_Laws/精神保健福祉法]] | 8 |
-| 9 | [[64_Methods/構造化支援]] | 7 |
-| 10 | [[62_Frameworks/ICF]] | 7 |
+| 7 | [[62_Frameworks/ICF]] | 8 |
+| 8 | [[60_Laws/発達障害者支援法]] | 8 |
+| 9 | [[60_Laws/精神保健福祉法]] | 8 |
+| 10 | [[64_Methods/構造化支援]] | 7 |
 | 11 | [[63_Disorders/統合失調症]] | 7 |
 | 12 | [[64_Methods/ABC分析]] | 7 |
 | 13 | [[66_Services/計画相談支援]] | 7 |
 | 14 | [[66_Services/精神通院医療]] | 7 |
-| 15 | [[64_Methods/強度行動障害支援]] | 6 |
+| 15 | [[66_Services/就労移行支援]] | 6 |
 
 ## 📅 最近の変更（git log 直近 15 件）
 
 | commit | date | message |
 |---|---|---|
+| `a7fb6b9` | 2026-04-21 | feat: data-wiki CLAUDE.md 規約を準拠する vault 運用マニュアルを策定 |
 | `ac4ba82` | 2026-04-20 | feat(mcp): welfare-graph MCP サーバーを実装 — Claude Desktop / Code から照会可能に |
 | `366ba78` | 2026-04-20 | feat: 進化する知識グラフ機構 — 法令改正追随システムを実装 |
 | `c4b1d5f` | 2026-04-20 | feat: raw → wiki 取り込みワークフローと七生養護学校事件の取り込み |
@@ -112,7 +113,7 @@ relations が 3 件以上ある層間接続を表示。数字は接続数。
 graph LR
     00MOC["00_MOC<br/>(7)"]
     10People["10_People<br/>(3)"]
-    30Insights["30_Insights<br/>(6)"]
+    30Insights["30_Insights<br/>(8)"]
     50Resilience["50_Resilience<br/>(2)"]
     60Laws["60_Laws<br/>(11)"]
     61Guidelines["61_Guidelines<br/>(11)"]
@@ -140,13 +141,15 @@ graph LR
     60Laws -->|7| 63Disorders
     10People -->|7| 60Laws
     10People -->|7| 67Orgs
+    30Insights -->|6| 66Services
     67Orgs -->|6| 66Services
     66Services -->|6| 67Orgs
+    30Insights -->|5| 62Frameworks
     30Insights -->|5| 64Methods
     61Guidelines -->|5| 64Methods
     60Laws -->|5| 67Orgs
     10People -->|5| 65Assessments
-    30Insights -->|4| 62Frameworks
+    30Insights -->|4| 60Laws
     67Orgs -->|4| 63Disorders
     66Services -->|4| 61Guidelines
     60Laws -->|4| 61Guidelines
@@ -155,7 +158,6 @@ graph LR
     65Assessments -->|4| 62Frameworks
     65Assessments -->|4| 63Disorders
     30Insights -->|3| 63Disorders
-    30Insights -->|3| 66Services
     62Frameworks -->|3| 61Guidelines
     65Assessments -->|3| 66Services
     64Methods -->|3| 61Guidelines
