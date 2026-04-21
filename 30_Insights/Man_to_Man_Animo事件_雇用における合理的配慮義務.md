@@ -3,7 +3,7 @@
 type: insight
 tags: [insight, 判例, 合理的配慮, 障害者雇用, 高次脳機能障害, 強迫性障害, 就労支援]
 cssclasses: [layer-insight]
-applies_to_disorders: []
+applies_to_disorders: ["[[63_Disorders/高次脳機能障害]]", "[[63_Disorders/強迫性障害]]"]
 applies_to_methods: []
 evidence_level: "判例（岐阜地判令和4年8月30日）／弁護士事務所による解説"
 source: "raw/insights/2022_Man_to_Man_Animo事件_ASK川崎解説.md"
@@ -40,6 +40,18 @@ relations:
     type: complements
     weight: 0.95
     rationale: "雇用分野における合理的配慮（および準ずる義務）概念の具体判例として機能"
+  - to: "[[60_Laws/障害者雇用促進法]]"
+    type: complements
+    weight: 0.95
+    evidence: "36条の2・3の解釈が争点"
+  - to: "[[63_Disorders/高次脳機能障害]]"
+    type: complements
+    weight: 0.85
+    rationale: "原告労働者の主障害、雇用合理的配慮の具体化の事例"
+  - to: "[[63_Disorders/強迫性障害]]"
+    type: complements
+    weight: 0.7
+    rationale: "原告労働者の併存障害"
 ---
 
 # Man to Man Animo 事件 — 雇用における合理的配慮義務の判断枠組み
