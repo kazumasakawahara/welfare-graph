@@ -17,9 +17,9 @@ cssclasses: [layer-meta]
 
 ## 📊 全体サマリ
 
-- **総ノート数**: 121
-- **総 relations**: 355
-- **平均 relations/ノート**: 2.9
+- **総ノート数**: 131
+- **総 relations**: 431
+- **平均 relations/ノート**: 3.3
 
 ## 🗂 層別ページ数
 
@@ -27,34 +27,34 @@ cssclasses: [layer-meta]
 |---|---|
 | 00_MOC | 7 |
 | 10_People | 3 |
-| 30_Insights | 6 |
+| 30_Insights | 8 |
 | 50_Resilience | 2 |
-| 60_Laws | 11 |
+| 60_Laws | 15 |
 | 61_Guidelines | 11 |
-| 62_Frameworks | 7 |
-| 63_Disorders | 12 |
+| 62_Frameworks | 8 |
+| 63_Disorders | 14 |
 | 64_Methods | 13 |
 | 65_Assessments | 9 |
 | 66_Services | 21 |
 | 67_Orgs | 13 |
-| 90_Meta | 6 |
+| 90_Meta | 7 |
 
 ## 📑 type 別ページ数
 
 | type | 件数 |
 |---|---|
 | service | 20 |
+| law | 14 |
+| disorder | 13 |
 | org | 12 |
 | method | 12 |
-| disorder | 11 |
 | guideline | 10 |
-| law | 10 |
+| insight | 8 |
 | layer-readme | 8 |
+| meta | 7 |
 | moc | 7 |
+| framework | 7 |
 | assessment | 7 |
-| meta | 6 |
-| insight | 6 |
-| framework | 6 |
 | person | 3 |
 | care_role | 1 |
 | substitute | 1 |
@@ -63,7 +63,7 @@ cssclasses: [layer-meta]
 
 | status | 件数 |
 |---|---|
-| active | 119 |
+| active | 129 |
 | archived | 1 |
 | 検討中 | 1 |
 
@@ -77,26 +77,30 @@ cssclasses: [layer-meta]
 
 | 順位 | ノート | 被参照数 |
 |---|---|---|
-| 1 | [[60_Laws/障害者総合支援法]] | 36 |
-| 2 | [[63_Disorders/自閉スペクトラム症]] | 19 |
+| 1 | [[60_Laws/障害者総合支援法]] | 42 |
+| 2 | [[63_Disorders/自閉スペクトラム症]] | 20 |
 | 3 | [[63_Disorders/知的障害]] | 17 |
 | 4 | [[63_Disorders/強度行動障害]] | 13 |
-| 5 | [[60_Laws/障害者虐待防止法]] | 12 |
-| 6 | [[61_Guidelines/意思決定支援ガイドライン]] | 11 |
-| 7 | [[60_Laws/発達障害者支援法]] | 8 |
-| 8 | [[60_Laws/精神保健福祉法]] | 8 |
-| 9 | [[64_Methods/構造化支援]] | 7 |
-| 10 | [[62_Frameworks/ICF]] | 7 |
-| 11 | [[63_Disorders/統合失調症]] | 7 |
-| 12 | [[64_Methods/ABC分析]] | 7 |
-| 13 | [[66_Services/計画相談支援]] | 7 |
-| 14 | [[66_Services/精神通院医療]] | 7 |
-| 15 | [[64_Methods/強度行動障害支援]] | 6 |
+| 5 | [[61_Guidelines/意思決定支援ガイドライン]] | 12 |
+| 6 | [[60_Laws/障害者虐待防止法]] | 12 |
+| 7 | [[62_Frameworks/ICF]] | 11 |
+| 8 | [[60_Laws/障害者差別解消法]] | 10 |
+| 9 | [[66_Services/就労移行支援]] | 10 |
+| 10 | [[64_Methods/構造化支援]] | 8 |
+| 11 | [[60_Laws/発達障害者支援法]] | 8 |
+| 12 | [[60_Laws/精神保健福祉法]] | 8 |
+| 13 | [[62_Frameworks/合理的配慮]] | 7 |
+| 14 | [[63_Disorders/統合失調症]] | 7 |
+| 15 | [[66_Services/就労定着支援]] | 7 |
 
 ## 📅 最近の変更（git log 直近 15 件）
 
 | commit | date | message |
 |---|---|---|
+| `c1bec5d` | 2026-04-21 | feat: 合理的配慮グラフの周辺補完 — 法令4・障害特性2・MOC更新 |
+| `64adb98` | 2026-04-21 | feat: 合理的配慮フレームワークをハブページとして新設 |
+| `0d687ac` | 2026-04-21 | feat: 合理的配慮関連判例 2 件を ingest |
+| `a7fb6b9` | 2026-04-21 | feat: data-wiki CLAUDE.md 規約を準拠する vault 運用マニュアルを策定 |
 | `ac4ba82` | 2026-04-20 | feat(mcp): welfare-graph MCP サーバーを実装 — Claude Desktop / Code から照会可能に |
 | `366ba78` | 2026-04-20 | feat: 進化する知識グラフ機構 — 法令改正追随システムを実装 |
 | `c4b1d5f` | 2026-04-20 | feat: raw → wiki 取り込みワークフローと七生養護学校事件の取り込み |
@@ -112,51 +116,54 @@ relations が 3 件以上ある層間接続を表示。数字は接続数。
 graph LR
     00MOC["00_MOC<br/>(7)"]
     10People["10_People<br/>(3)"]
-    30Insights["30_Insights<br/>(6)"]
+    30Insights["30_Insights<br/>(8)"]
     50Resilience["50_Resilience<br/>(2)"]
-    60Laws["60_Laws<br/>(11)"]
+    60Laws["60_Laws<br/>(15)"]
     61Guidelines["61_Guidelines<br/>(11)"]
-    62Frameworks["62_Frameworks<br/>(7)"]
-    63Disorders["63_Disorders<br/>(12)"]
+    62Frameworks["62_Frameworks<br/>(8)"]
+    63Disorders["63_Disorders<br/>(14)"]
     64Methods["64_Methods<br/>(13)"]
     65Assessments["65_Assessments<br/>(9)"]
     66Services["66_Services<br/>(21)"]
     67Orgs["67_Orgs<br/>(13)"]
-    90Meta["90_Meta<br/>(6)"]
+    90Meta["90_Meta<br/>(7)"]
     66Services -->|23| 60Laws
     64Methods -->|19| 63Disorders
+    63Disorders -->|18| 66Services
+    63Disorders -->|17| 64Methods
     67Orgs -->|14| 60Laws
-    63Disorders -->|14| 64Methods
-    63Disorders -->|13| 66Services
     10People -->|13| 66Services
     61Guidelines -->|12| 60Laws
+    63Disorders -->|12| 60Laws
     66Services -->|11| 63Disorders
     10People -->|10| 64Methods
+    60Laws -->|9| 62Frameworks
+    60Laws -->|9| 63Disorders
+    62Frameworks -->|9| 60Laws
     10People -->|9| 63Disorders
     10People -->|9| 62Frameworks
     10People -->|9| 61Guidelines
+    30Insights -->|8| 60Laws
+    60Laws -->|8| 66Services
+    30Insights -->|7| 62Frameworks
     61Guidelines -->|7| 66Services
-    63Disorders -->|7| 60Laws
-    60Laws -->|7| 63Disorders
+    60Laws -->|7| 67Orgs
     10People -->|7| 60Laws
     10People -->|7| 67Orgs
+    30Insights -->|6| 66Services
     67Orgs -->|6| 66Services
     66Services -->|6| 67Orgs
     30Insights -->|5| 64Methods
+    30Insights -->|5| 63Disorders
     61Guidelines -->|5| 64Methods
-    60Laws -->|5| 67Orgs
     10People -->|5| 65Assessments
-    30Insights -->|4| 62Frameworks
     67Orgs -->|4| 63Disorders
     66Services -->|4| 61Guidelines
     60Laws -->|4| 61Guidelines
-    60Laws -->|4| 66Services
-    62Frameworks -->|4| 60Laws
+    62Frameworks -->|4| 61Guidelines
     65Assessments -->|4| 62Frameworks
     65Assessments -->|4| 63Disorders
-    30Insights -->|3| 63Disorders
-    30Insights -->|3| 66Services
-    62Frameworks -->|3| 61Guidelines
+    62Frameworks -->|3| 66Services
     65Assessments -->|3| 66Services
     64Methods -->|3| 61Guidelines
 ```
