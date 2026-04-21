@@ -17,7 +17,7 @@ cssclasses: [layer-meta]
 
 ## 📊 全体サマリ
 
-- **総ノート数**: 130
+- **総ノート数**: 131
 - **総 relations**: 431
 - **平均 relations/ノート**: 3.3
 
@@ -37,7 +37,7 @@ cssclasses: [layer-meta]
 | 65_Assessments | 9 |
 | 66_Services | 21 |
 | 67_Orgs | 13 |
-| 90_Meta | 6 |
+| 90_Meta | 7 |
 
 ## 📑 type 別ページ数
 
@@ -51,10 +51,10 @@ cssclasses: [layer-meta]
 | guideline | 10 |
 | insight | 8 |
 | layer-readme | 8 |
+| meta | 7 |
 | moc | 7 |
 | framework | 7 |
 | assessment | 7 |
-| meta | 6 |
 | person | 3 |
 | care_role | 1 |
 | substitute | 1 |
@@ -63,7 +63,7 @@ cssclasses: [layer-meta]
 
 | status | 件数 |
 |---|---|
-| active | 128 |
+| active | 129 |
 | archived | 1 |
 | 検討中 | 1 |
 
@@ -97,6 +97,7 @@ cssclasses: [layer-meta]
 
 | commit | date | message |
 |---|---|---|
+| `c1bec5d` | 2026-04-21 | feat: 合理的配慮グラフの周辺補完 — 法令4・障害特性2・MOC更新 |
 | `64adb98` | 2026-04-21 | feat: 合理的配慮フレームワークをハブページとして新設 |
 | `0d687ac` | 2026-04-21 | feat: 合理的配慮関連判例 2 件を ingest |
 | `a7fb6b9` | 2026-04-21 | feat: data-wiki CLAUDE.md 規約を準拠する vault 運用マニュアルを策定 |
@@ -125,7 +126,7 @@ graph LR
     65Assessments["65_Assessments<br/>(9)"]
     66Services["66_Services<br/>(21)"]
     67Orgs["67_Orgs<br/>(13)"]
-    90Meta["90_Meta<br/>(6)"]
+    90Meta["90_Meta<br/>(7)"]
     66Services -->|23| 60Laws
     64Methods -->|19| 63Disorders
     63Disorders -->|18| 66Services
