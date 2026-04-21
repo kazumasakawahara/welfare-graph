@@ -36,6 +36,10 @@ relations:
     type: complements
     weight: 0.6
     rationale: "障害者雇用促進法上のアセスメント・助言機関"
+  - to: "[[62_Frameworks/合理的配慮]]"
+    type: complements
+    weight: 0.95
+    rationale: "雇用分野における合理的配慮（および準ずる義務）概念の具体判例として機能"
 ---
 
 # Man to Man Animo 事件 — 雇用における合理的配慮義務の判断枠組み
