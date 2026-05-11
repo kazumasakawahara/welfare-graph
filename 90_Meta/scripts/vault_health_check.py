@@ -123,7 +123,7 @@ def check_vault():
         ids_by_name[md.stem].append(md_to_id(md))
 
     critical = {"expired": [], "missing_required": [], "realname_suspect": [], "parse_error": []}
-    warning = {"due_soon": [], "broken_link": [], "orphan": [], "weight_oor": [], "type_unknown": []}
+    warning = {"due_soon": [], "broken_link": [], "folder_form_link": [], "orphan": [], "weight_oor": [], "type_unknown": []}
     info = {"layer_counts": Counter(), "type_counts": Counter(), "rel_type_counts": Counter(),
             "rel_density": [], "total_mds": 0, "total_with_fm": 0, "total_relations": 0}
 
@@ -228,6 +228,10 @@ def check_vault():
             target = extract_wikilink_target(target_link)
             if not target:
                 continue
+            # フォルダ末尾形（[[層/]]）は Obsidian の wikilink としては未解決になる
+            if target.endswith("/"):
+                warning["folder_form_link"].append((rel_path, target, "relations"))
+                continue
             # 完全一致 or suffix 一致
             if target in all_ids:
                 referenced.add(target)
@@ -238,9 +242,12 @@ def check_vault():
                 else:
                     warning["broken_link"].append((rel_path, target))
 
-        # 本文 wikilink も被参照マーク（孤児ノート判定用）
+        # 本文 wikilink — 被参照マーク（孤児ノート判定用）+ フォルダ末尾形検出
         for m in WIKILINK_RE.finditer(post.content):
             target = extract_wikilink_target("[[" + m.group(1) + "]]")
+            if target.endswith("/"):
+                warning["folder_form_link"].append((rel_path, target, "body"))
+                continue
             if target in all_ids:
                 referenced.add(target)
             else:
@@ -381,6 +388,23 @@ def generate_report(critical, warning, info):
         R(f"なし")
     R(f"")
 
+    R(f"### 6b. フォルダ末尾形 wikilink ({len(warning['folder_form_link'])}件)")
+    R(f"")
+    R(f"`[[層/]]` の末尾スラッシュ形式は Obsidian では未解決リンクになる。")
+    R(f"Dataview クエリ（例: `LIST FROM \"30_Insights\"`）または具体ページ列挙に置換すること。")
+    R(f"")
+    if warning["folder_form_link"]:
+        by_source = defaultdict(list)
+        for src, target, loc in warning["folder_form_link"]:
+            by_source[src].append((target, loc))
+        for src, items in by_source.items():
+            R(f"- `{src}`:")
+            for t, loc in items:
+                R(f"  - `[[{t}]]` ({loc})")
+    else:
+        R(f"なし")
+    R(f"")
+
     R(f"### 7. 孤児ノート ({len(warning['orphan'])}件)")
     if warning["orphan"]:
         for path in warning["orphan"]:
@@ -467,6 +491,8 @@ def generate_report(critical, warning, info):
     if warning_total > 0:
         if warning["broken_link"]:
             R(f"- [ ] 壊れ wikilink {len(warning['broken_link'])}件 の stub 作成 or 修正")
+        if warning["folder_form_link"]:
+            R(f"- [ ] フォルダ末尾形 wikilink {len(warning['folder_form_link'])}件 の具体ページ列挙 or Dataview 化")
         if warning["orphan"]:
             R(f"- [ ] 孤児ノート {len(warning['orphan'])}件 の relations 追加 or 削除")
         if warning["due_soon"]:
