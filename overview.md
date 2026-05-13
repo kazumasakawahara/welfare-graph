@@ -98,6 +98,7 @@ cssclasses: [layer-meta]
 
 | commit | date | message |
 |---|---|---|
+| `97f18b4` | 2026-05-13 | fix(post-pr1): H1-H3 + 派生6ページ provisional 化 + health-check 拡張 |
 | `3949b77` | 2026-05-13 | Merge pull request #1 from kazumasakawahara/claude/sharp-bhabha-cab007 |
 | `1974099` | 2026-05-11 | docs(log): PR #1 レビュー対応と page-creation-principles の関係を明示 |
 | `45d3017` | 2026-05-11 | docs(claude): raw/ ガードレールの新規追加可否を明文化 |
@@ -112,7 +113,6 @@ cssclasses: [layer-meta]
 | `ac4ba82` | 2026-04-20 | feat(mcp): welfare-graph MCP サーバーを実装 — Claude Desktop / Code から照会可能に |
 | `366ba78` | 2026-04-20 | feat: 進化する知識グラフ機構 — 法令改正追随システムを実装 |
 | `c4b1d5f` | 2026-04-20 | feat: raw → wiki 取り込みワークフローと七生養護学校事件の取り込み |
-| `6576e2d` | 2026-04-20 | docs: 相談支援専門員向けの使用説明書を追加 |
 
 ## 🕸 層間関係グラフ（Mermaid）
 

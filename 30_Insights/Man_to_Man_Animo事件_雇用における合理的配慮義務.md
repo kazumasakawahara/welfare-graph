@@ -10,8 +10,9 @@ source: "raw/insights/2022_Man_to_Man_Animo事件_ASK川崎解説.md"
 source_citation: "弁護士法人ASK川崎「障害者に求められる合理的配慮義務とは？【判例解説】」（2024年4月2日更新）"
 source_url: "https://ask-business-law.com/top/column/shougaisha-sabetsu-kaisho/"
 created: 2026-04-21
-updated: 2026-04-21
+updated: 2026-05-13
 status: active
+triggered_by: "raw/insights/2022_Man_to_Man_Animo事件_ASK川崎解説.md の ingest 指示（user 配置 → raw-to-wiki）"
 relations:
   - to: "[[60_Laws/障害者差別解消法]]"
     type: informs
