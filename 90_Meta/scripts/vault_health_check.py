@@ -24,6 +24,10 @@ VAULT = Path(__file__).resolve().parents[2]
 REPORT_DIR = VAULT / "90_Meta" / "health-reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
+# page-creation-principles の策定日。これ以降に created されたページにのみ
+# 「投機的作成疑い（9b）」を遡及せず適用する。
+PRINCIPLES_EFFECTIVE_DATE = date(2026, 4, 21)
+
 EXCLUDE_DIRS = {".obsidian", ".claude", ".github", "raw", "90_Meta/templates", "90_Meta/health-reports", "90_Meta/amendment-reports", "90_Meta/scripts", "docs", "mcp_server"}
 EXCLUDE_FILES = {"90_Meta/alias_map.md", "CONTRIBUTING.md", "README.md", "CLAUDE.md", "log.md", "overview.md"}
 
@@ -123,7 +127,7 @@ def check_vault():
         ids_by_name[md.stem].append(md_to_id(md))
 
     critical = {"expired": [], "missing_required": [], "realname_suspect": [], "parse_error": []}
-    warning = {"due_soon": [], "broken_link": [], "folder_form_link": [], "orphan": [], "weight_oor": [], "type_unknown": []}
+    warning = {"due_soon": [], "broken_link": [], "folder_form_link": [], "orphan": [], "weight_oor": [], "type_unknown": [], "speculative_suspect": []}
     info = {"layer_counts": Counter(), "type_counts": Counter(), "rel_type_counts": Counter(),
             "rel_density": [], "total_mds": 0, "total_with_fm": 0, "total_relations": 0}
 
@@ -171,6 +175,23 @@ def check_vault():
                     missing.append("icd11_code or dsm5_code")
             if missing:
                 critical["missing_required"].append((rel_path, node_type, missing))
+
+        # 投機的作成疑い（page-creation-principles §3.1）
+        # 原則策定日（PRINCIPLES_EFFECTIVE_DATE）以降に created されたページのみ対象。
+        # 過去のページは「原則施行前」として尊重し、遡及適用しない。
+        # status: provisional でない、かつ triggered_by が空、かつ status が active のページは疑い。
+        # MOC / layer-readme / meta / person / episode / README / SCHEMA は対象外。
+        triggered_by = meta.get("triggered_by", "")
+        created_d = parse_date(meta.get("created"))
+        if (
+            created_d
+            and created_d >= PRINCIPLES_EFFECTIVE_DATE
+            and node_status == "active"
+            and not triggered_by
+            and node_type not in {"moc", "layer-readme", "meta", "person", "episode"}
+            and md.stem not in {"README", "SCHEMA"}
+        ):
+            warning["speculative_suspect"].append((rel_path, node_type))
 
         # review_due チェック
         rd = parse_date(meta.get("review_due"))
@@ -429,6 +450,30 @@ def generate_report(critical, warning, info):
         R(f"なし")
     R(f"")
 
+    R(f"### 9b. 投機的作成疑い（triggered_by 欠如）({len(warning['speculative_suspect'])}件)")
+    R(f"")
+    R(f"page-creation-principles §3.1 で `triggered_by` フィールド（作成トリガーの実務エピソード）")
+    R(f"が推奨される。status: active かつ未記入のページは投機的作成の可能性あり。")
+    R(f"")
+    R(f"**遡及適用なし**: 原則策定日（{PRINCIPLES_EFFECTIVE_DATE.isoformat()}）以降に `created` されたページのみ対象。")
+    R(f"それ以前のページは「原則施行前」として尊重する。")
+    R(f"")
+    R(f"対応: (a) `triggered_by` を記入する / (b) status を `provisional` に降格する / ")
+    R(f"(c) 30 日静観の後 archived へ。")
+    R(f"")
+    if warning["speculative_suspect"]:
+        # type 別にグルーピング
+        by_type = defaultdict(list)
+        for src, t in warning["speculative_suspect"]:
+            by_type[t].append(src)
+        for t, srcs in sorted(by_type.items()):
+            R(f"- **{t}** ({len(srcs)}件):")
+            for src in srcs:
+                R(f"  - `{src}`")
+    else:
+        R(f"なし")
+    R(f"")
+
     # INFO
     R(f"## 🟢 INFO")
     R(f"")
@@ -501,6 +546,8 @@ def generate_report(critical, warning, info):
             R(f"- [ ] 辞書外 type {len(warning['type_unknown'])}件 の辞書追加 or 修正")
         if warning["weight_oor"]:
             R(f"- [ ] weight 範囲外 {len(warning['weight_oor'])}件 の修正")
+        if warning["speculative_suspect"]:
+            R(f"- [ ] 投機的作成疑い {len(warning['speculative_suspect'])}件 の `triggered_by` 補完 or `status: provisional` 降格")
     else:
         R(f"- WARNING 項目なし")
     R(f"")
